@@ -93,16 +93,21 @@ function handleChangeInputB() {
 }
 
 function calculate() {
-  const a = parseInt(globalInputA.value, 10);
-  const b = parseInt(globalInputB.value, 10);
+  const numberA = parseInt(globalInputA.value, 10);
+  const numberB = parseInt(globalInputB.value, 10);
 
   const innerCalculation = document.createElement('div');
   innerCalculation.classList.add('row');
 
   globalCalculations.forEach(function (calculation) {
-    let id = calculation.id;
-    let value = calculation.id;
+    let id = 'input_' + calculation.id;
     let description = calculation.description;
+    let value = getCalculationsFrom(
+      calculation.type,
+      calculation.calculationFunction,
+      numberA,
+      numberB
+    );
 
     const divElement = createElementDiv();
     const inputElement = createElementInput(id, value);
@@ -180,6 +185,21 @@ function getFactorialFrom(number) {
   }
 
   return number * getFactorialFrom(number - 1);
+}
+
+function getCalculationsFrom(type, calculationFunction, a, b) {
+  switch (type) {
+    case 'a':
+      return calculationFunction(a);
+    case 'b':
+      return calculationFunction(b);
+    case 'a_b':
+      return calculationFunction(a, b);
+    case 'b_a':
+      return calculationFunction(b, a);
+    default:
+      return 'Não definido';
+  }
 }
 
 start();
