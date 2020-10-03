@@ -109,19 +109,24 @@ function calculate() {
       numberB
     );
 
-    const divElement = createElementDiv();
-    const inputElement = createElementInput(id, value);
-    const labelElement = createElementLabel(id, description);
-
-    divElement.appendChild(inputElement);
-    divElement.appendChild(labelElement);
-    innerCalculation.appendChild(divElement);
+    innerCalculation.appendChild(
+      createElementCalculate(id, value, description)
+    );
   });
 
   globalDivCalculation.innerHTML = '';
   globalDivCalculation.appendChild(innerCalculation);
 }
 
+function createElementCalculate(id, value, description) {
+  let div = createElementDiv();
+  let input = createElementInput(id, value);
+  let label = createElementLabel(id, description);
+  div.appendChild(input);
+  div.appendChild(label);
+
+  return div;
+}
 function createElementDiv() {
   let div = document.createElement('div');
   div.classList.add('input-field', 'col', 's12', 'm6', 'l4');
@@ -172,16 +177,16 @@ function getDivisorsFrom(number) {
 }
 
 function getFactorialFrom(number) {
+  if (number > 21) {
+    return '0';
+  }
+
   if (isNaN(number)) {
     return 'NaN';
   }
 
   if (number === 0) {
     return 1;
-  }
-
-  if (number > 21) {
-    return 'Too large';
   }
 
   return number * getFactorialFrom(number - 1);
